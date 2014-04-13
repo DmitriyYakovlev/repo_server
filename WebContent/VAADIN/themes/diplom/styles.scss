@@ -1,0 +1,9 @@
+@import "addons.scss";
+@import "diplom.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in diplom.scss */
+.diplom {
+  @include addons;
+  @include diplom;
+}
