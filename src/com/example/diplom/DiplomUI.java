@@ -30,6 +30,10 @@ public class DiplomUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
+		setPaswordFields();
+	}
+
+	public void setPaswordFields(){
 		VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 		layout.setSpacing(true);
@@ -48,14 +52,15 @@ public class DiplomUI extends UI {
 		Button loginButton = new Button("Login", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-
+				
 			}
 		});
 		
 		layout.addComponent(loginButton);
 		layout.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
-		
 		setContent(layout);
-	}
 
+	}
+	
+	
 }
