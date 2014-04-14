@@ -15,6 +15,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
@@ -33,50 +34,63 @@ public class DiplomUI extends UI {
 
 	private TextField username;
 	private PasswordField password;
-	private static final String FNAME = "First Name";
-	private static final String LNAME = "Last Name";
-	private static final String COMPANY = "Company";
-	IndexedContainer contactContainer = createDummyDatasource();
+	private TextField searchField = new TextField();
+	private Button addNewContactButton = new Button("New");
+	private VerticalLayout rightLayout = new VerticalLayout();
+
+	//// vocabilary table
+	private static final String VNAME = "Vocabilary name";
+	private static final String BLOAD = "Load";
+	private static final String BDELETE = "Delete";
+	IndexedContainer contactContainer = createVocabilaryDatasource();
 	
+	//// words table
+	private static final String WORD = "Word";
+	private static final String DESCRIPTION = "Description";
+	private static final String BTN_DEL_WORD = "Delete";
+	IndexedContainer wordsContainer = createWodsDataSourse();
+
+	
+
 	// second
-	private Table contactList = new Table();
+	private Table vocabilaryList = new Table();
+	private Table wordsList = new Table();
 
 	@Override
 	protected void init(VaadinRequest request) {
-		//setPaswordFields();
+		// setPaswordFields();
 		initLayout();
-		initContactList();
+		initVocabilaryList();
+		initWordsList();
 	}
 
-	public void setPaswordFields(){
+	public void setPaswordFields() {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 		layout.setSpacing(true);
 		layout.setStyleName(Reindeer.LAYOUT_BLUE);
-			
+
 		username = new TextField("Username");
 		layout.addComponent(username);
 		layout.setComponentAlignment(username, Alignment.MIDDLE_CENTER);
-
 
 		password = new PasswordField("Password");
 		layout.addComponent(password);
 		layout.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
 
-
 		Button loginButton = new Button("Login", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
+
 			}
 		});
-		
+
 		layout.addComponent(loginButton);
 		layout.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
 		setContent(layout);
 
 	}
-	
+
 	private void initLayout() {
 
 		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
@@ -84,55 +98,144 @@ public class DiplomUI extends UI {
 
 		VerticalLayout leftLayout = new VerticalLayout();
 		splitPanel.addComponent(leftLayout);
-		
+		splitPanel.addComponent(rightLayout);
+
+		Label lbUser = new Label("User :");
+		lbUser.setContentMode(Label.CONTENT_TEXT);
+		leftLayout.addComponent(lbUser);
+
+		Label lbUserName = new Label("___");
+		lbUserName.setContentMode(Label.CONTENT_TEXT);
+		leftLayout.addComponent(lbUser);
+
 		leftLayout.setSizeFull();
-		leftLayout.addComponent(contactList);
-		leftLayout.setExpandRatio(contactList, 1);
-		contactList.setSizeFull();
+		leftLayout.addComponent(vocabilaryList);
+		leftLayout.setExpandRatio(vocabilaryList, 1);
+		vocabilaryList.setSizeFull();
+		
+		HorizontalLayout bottomLeftLayout = new HorizontalLayout();
+		leftLayout.addComponent(bottomLeftLayout);
+		bottomLeftLayout.addComponent(searchField);
+		bottomLeftLayout.addComponent(addNewContactButton);
 
-	}	
-	
-	private void initContactList() {
-		contactList.setContainerDataSource(contactContainer);
-		contactList.setVisibleColumns(new String[] { FNAME, LNAME, COMPANY });
-		contactList.setSelectable(true);
-		contactList.setImmediate(true);
+		//////////
+		Label lbVocabilaryName = new Label("Vocabilary");
+		lbVocabilaryName.setContentMode(Label.CONTENT_TEXT);
+		rightLayout.addComponent(lbVocabilaryName);
 
-		contactList.addValueChangeListener(new Property.ValueChangeListener() {
+		
+		rightLayout.addComponent(wordsList);
+		rightLayout.setExpandRatio(wordsList, 1);
+		wordsList.setSizeFull();
+
+	}
+
+	private void initVocabilaryList() {
+		vocabilaryList.setContainerDataSource(contactContainer);
+		vocabilaryList.setVisibleColumns(new String[] { VNAME, BLOAD, BDELETE });
+		vocabilaryList.setSelectable(true);
+		vocabilaryList.setImmediate(true);
+
+		vocabilaryList.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				Object contactId = contactList.getValue();
+				Object contactId = vocabilaryList.getValue();
 			}
 		});
+		
 	}
 
-	private static final String[] fieldNames = new String[] { FNAME, LNAME,
-		COMPANY, "Mobile Phone", "Work Phone", "Home Phone", "Work Email",
-		"Home Email", "Street", "City", "Zip", "State", "Country" };
+	private void initWordsList(){
+		wordsList.setContainerDataSource(wordsContainer);
+		wordsList.setVisibleColumns(new String[] { WORD, DESCRIPTION, BTN_DEL_WORD });
+		wordsList.setSelectable(true);
+		wordsList.setImmediate(true);
 
-	private static IndexedContainer createDummyDatasource() {
+		wordsList.addValueChangeListener(new Property.ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				Object contactId = wordsList.getValue();
+			}
+		});
+		
+	}
+	
+	private static IndexedContainer createVocabilaryDatasource() {
 		IndexedContainer ic = new IndexedContainer();
 
-		for (String p : fieldNames) {
-			ic.addContainerProperty(p, String.class, "");
-		}
+		ic.addContainerProperty(VNAME, String.class, "");
+		ic.addContainerProperty(BLOAD, Button.class, null);
+		ic.addContainerProperty(BDELETE, Button.class, null);
 
 		String[] fnames = { "Peter", "Alice", "Joshua", "Mike", "Olivia",
 				"Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene",
 				"Lisa", "Marge" };
-		String[] lnames = { "Smith", "Gordon", "Simpson", "Brown", "Clavel",
-				"Simons", "Verne", "Scott", "Allison", "Gates", "Rowling",
-				"Barks", "Ross", "Schneider", "Tate" };
+
 		for (int i = 0; i < 1000; i++) {
 			Object id = ic.addItem();
-			ic.getContainerProperty(id, FNAME).setValue(
-					fnames[(int) (fnames.length * Math.random())]);
-			ic.getContainerProperty(id, LNAME).setValue(
-					lnames[(int) (lnames.length * Math.random())]);
+			ic.getContainerProperty(id, VNAME).setValue(fnames[(int) (fnames.length * Math.random())]);
+
+			Integer itemId = new Integer(i);
+
+			Button btnLoad = new Button("load");
+			btnLoad.setData(itemId);
+			btnLoad.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					Integer iid = (Integer) event.getButton().getData();
+					Notification.show("Link " + iid.intValue() + " clicked.");
+				}
+			});
+			ic.getContainerProperty(id, BLOAD).setValue(btnLoad);
+			
+			Button btnDelete = new Button("Delete");
+			btnDelete.setData(itemId);
+			btnDelete.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					Integer iid = (Integer) event.getButton().getData();
+					Notification.show("Link " + iid.intValue() + " clicked.");
+				}
+			});
+			ic.getContainerProperty(id, BDELETE).setValue(btnDelete);
+
 		}
 
 		return ic;
 	}
+
 	
+	private static IndexedContainer createWodsDataSourse() {
+		IndexedContainer ic = new IndexedContainer();
+
+		ic.addContainerProperty(WORD, String.class, "");
+		ic.addContainerProperty(DESCRIPTION, String.class, "");
+		ic.addContainerProperty(BTN_DEL_WORD, Button.class, null);
+
+		String[] fnames = { "Peter", "Alice", "Joshua", "Mike", "Olivia",
+				"Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene",
+				"Lisa", "Marge" };
+
+		for (int i = 0; i < 1000; i++) {
+			Object id = ic.addItem();
+			ic.getContainerProperty(id, WORD).setValue(fnames[(int) (fnames.length * Math.random())]);
+
+			ic.getContainerProperty(id, DESCRIPTION).setValue(fnames[(int) (fnames.length * Math.random())]);
+
+			Integer itemId = new Integer(i);
+
+			Button btnDelete = new Button("Delete");
+			btnDelete.setData(itemId);
+			btnDelete.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+					Integer iid = (Integer) event.getButton().getData();
+					Notification.show("Link " + iid.intValue() + " clicked.");
+				}
+			});
+			ic.getContainerProperty(id, BTN_DEL_WORD).setValue(btnDelete);
+
+		}
+
+		return ic;
+	}
 }
