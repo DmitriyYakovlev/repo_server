@@ -1,5 +1,8 @@
 package com.example.diplom;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
@@ -20,6 +23,9 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Upload;
+import com.vaadin.ui.Upload.FinishedEvent;
+import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -50,8 +56,6 @@ public class DiplomUI extends UI {
 	private static final String BTN_DEL_WORD = "Delete";
 	IndexedContainer wordsContainer = createWodsDataSourse();
 
-	
-
 	// second
 	private Table vocabilaryList = new Table();
 	private Table wordsList = new Table();
@@ -62,8 +66,10 @@ public class DiplomUI extends UI {
 		initLayout();
 		initVocabilaryList();
 		initWordsList();
+		
 	}
 
+	
 	public void setPaswordFields() {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
@@ -88,9 +94,10 @@ public class DiplomUI extends UI {
 		layout.addComponent(loginButton);
 		layout.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
 		setContent(layout);
-
 	}
 
+	
+	
 	private void initLayout() {
 
 		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
@@ -166,7 +173,7 @@ public class DiplomUI extends UI {
 		IndexedContainer ic = new IndexedContainer();
 
 		ic.addContainerProperty(VNAME, String.class, "");
-		ic.addContainerProperty(BLOAD, Button.class, null);
+		ic.addContainerProperty(BLOAD, Upload.class, null);
 		ic.addContainerProperty(BDELETE, Button.class, null);
 
 		String[] fnames = { "Peter", "Alice", "Joshua", "Mike", "Olivia",
@@ -179,14 +186,15 @@ public class DiplomUI extends UI {
 
 			Integer itemId = new Integer(i);
 
-			Button btnLoad = new Button("load");
+			Upload btnLoad = new Upload(null, receiver);
 			btnLoad.setData(itemId);
-			btnLoad.addClickListener(new Button.ClickListener() {
-				public void buttonClick(ClickEvent event) {
-					Integer iid = (Integer) event.getButton().getData();
-					Notification.show("Link " + iid.intValue() + " clicked.");
-				}
-			});
+			btnLoad.setImmediate(true);
+			 btnLoad.setButtonCaption("Select file");
+
+			btnLoad.addListener(new Upload.FinishedListener() {
+			public void uploadFinished(FinishedEvent event) {
+			            }
+			        });
 			ic.getContainerProperty(id, BLOAD).setValue(btnLoad);
 			
 			Button btnDelete = new Button("Delete");
@@ -195,6 +203,8 @@ public class DiplomUI extends UI {
 				public void buttonClick(ClickEvent event) {
 					Integer iid = (Integer) event.getButton().getData();
 					Notification.show("Link " + iid.intValue() + " clicked.");
+					
+					
 				}
 			});
 			ic.getContainerProperty(id, BDELETE).setValue(btnDelete);
@@ -204,7 +214,8 @@ public class DiplomUI extends UI {
 		return ic;
 	}
 
-	
+	private static MyReceiver receiver = new MyReceiver();
+
 	private static IndexedContainer createWodsDataSourse() {
 		IndexedContainer ic = new IndexedContainer();
 
@@ -238,4 +249,48 @@ public class DiplomUI extends UI {
 
 		return ic;
 	}
+	
+	
+	 public static class MyReceiver implements Receiver {
+
+	        private String fileName;
+	        private String mtype;
+	        private boolean sleep;
+	        private int total = 0;
+
+	        public OutputStream receiveUpload(String filename, String mimetype) {
+	            fileName = filename;
+	            mtype = mimetype;
+	            return new OutputStream() {
+	                @Override
+	                public void write(int b) throws IOException {
+	                    total++;
+	                    if (sleep && total % 10000 == 0) {
+	                        try {
+	                            Thread.sleep(100);
+	                        } catch (InterruptedException e) {
+	                            // TODO Auto-generated catch block
+	                            e.printStackTrace();
+	                        }
+	                    }
+	                }
+	            };
+	        }
+
+	        public String getFileName() {
+	            return fileName;
+	        }
+
+	        public String getMimeType() {
+	            return mtype;
+	        }
+
+	        public void setSlow(boolean value) {
+	            sleep = value;
+	        }
+
+	    }
+
+
+	
 }
