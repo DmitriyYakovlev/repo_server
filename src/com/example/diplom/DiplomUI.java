@@ -43,12 +43,10 @@ public class DiplomUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		
-		/*
 		AutorizationView autorization = new AutorizationView();
 		setContent(autorization);
-		*/
 
-		initLayout();
+//		initLayout();
 
 	}
 
