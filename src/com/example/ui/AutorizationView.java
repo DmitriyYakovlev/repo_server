@@ -20,17 +20,15 @@ public class AutorizationView extends VerticalLayout{
 	}
 	
 	public void setPaswordFields(VerticalLayout layout) {
+		
+		setSizeFull();
+
 		setMargin(true);
 		setSpacing(true);
 		setStyleName(Reindeer.LAYOUT_BLUE);
 
 		username = new TextField("Username");
-		addComponent(username);
-		setComponentAlignment(username, Alignment.MIDDLE_CENTER);
-
 		password = new PasswordField("Password");
-		addComponent(password);
-		setComponentAlignment(password, Alignment.MIDDLE_CENTER);
 
 		Button loginButton = new Button("Login", new Button.ClickListener() {
 			@Override
@@ -49,8 +47,18 @@ public class AutorizationView extends VerticalLayout{
 			}
 		});
 
-		addComponent(loginButton);
-		setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
+		VerticalLayout holder = new VerticalLayout();
+		holder.addComponent(username);
+		holder.addComponent(password);
+		holder.addComponent(loginButton);
+		
+		holder.setComponentAlignment(username, Alignment.MIDDLE_CENTER);
+		holder.setComponentAlignment(password, Alignment.MIDDLE_CENTER);
+		holder.setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
+		
+		addComponent(holder);
+		setComponentAlignment(holder, Alignment.MIDDLE_CENTER);
+		
 		
 	}
 	
