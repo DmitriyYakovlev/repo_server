@@ -45,7 +45,7 @@ public class DiplomUI extends UI {
 		
 		AutorizationView autorization = new AutorizationView();
 		setContent(autorization);
-
+int i;
 //		initLayout();
 
 	}
