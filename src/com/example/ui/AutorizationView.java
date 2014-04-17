@@ -3,6 +3,7 @@ package com.example.ui;
 import com.example.constants.Constants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -38,7 +39,16 @@ public class AutorizationView extends VerticalLayout{
 				
 				if (login.equals(Constants.LOGIN) && pass.equals(Constants.PASSWORD))
 				{
+					HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
+
+					LeftSide leftLayout = new LeftSide();
+					RightSide rightLayout = new RightSide();
 					
+					splitPanel.addComponent(leftLayout);
+					splitPanel.addComponent(rightLayout);
+					
+					getUI().setContent(splitPanel);
+					getUI().push();
 				}
 				else {
 					Notification.show("Incorect login or password");
