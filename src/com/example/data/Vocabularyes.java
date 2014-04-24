@@ -10,45 +10,51 @@ import javax.persistence.Table;
 @Entity
 @Table(name="vocabularyes")
 public class Vocabularyes {
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO) 
 	private int id; 
 
-	@Column(name="firstName")
-	private String firstName; 
+	@Column(name="name")
+	private String vocabName; 
 
-	@Column(name="lastName")
-	private String lastName; 
+	@Column(name="description")
+	private String vocabDescription; 
 	
-	@Column(name="email")
-	private String email;
+	@Column(name="authorId")
+	private int authorId;
 
 	public int getId() {
 		return id;
 	}
-	
-	public String getFirstName() {
-		return firstName;
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public String getVocabName() {
+		return vocabName;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public void setVocabName(String vocabName) {
+		this.vocabName = vocabName;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public String getVocabDescription() {
+		return vocabDescription;
 	}
 
-	public String getEmail() {
-		return email;
+	public void setVocabDescription(String vocabDescription) {
+		this.vocabDescription = vocabDescription;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public int getAuthorId() {
+		return authorId;
 	}
+
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
+	}
+
 }
    
