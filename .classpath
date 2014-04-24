@@ -20,5 +20,14 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=diplom&amp;ivyXmlPath=ivy.xml&amp;confs=widgetset-compile&amp;ivySettingsPath=%24%7Bworkspace_loc%3Adiplom%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;ivyUserDir=&amp;propertyFiles="/>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=diplom&amp;ivyXmlPath=ivy.xml&amp;confs=nodeploy&amp;ivySettingsPath=%24%7Bworkspace_loc%3Adiplom%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;ivyUserDir=&amp;propertyFiles="/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/hibernate-commons-annotations-4.0.2.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/hibernate-core-4.2.8.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/jboss-logging-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/jboss-transaction-api_1.1_spec-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dimasta/Desktop/VaadinList/VaadinList/WebContent/WEB-INF/lib/mysql-connector-java-5.1.0-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
