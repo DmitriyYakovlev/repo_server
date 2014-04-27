@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="vocabularyes")
-public class Vocabularyes {
+public class VocabularyT {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO) 
@@ -23,7 +23,15 @@ public class Vocabularyes {
 	
 	@Column(name="authorId")
 	private int authorId;
-
+  
+	public VocabularyT() { }
+	
+	public VocabularyT(String name, String desc, int authorId) {
+		this.vocabName = name;
+		this.vocabDescription = desc;
+		this.authorId = authorId;
+	}
+	
 	public int getId() {
 		return id;
 	}

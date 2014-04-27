@@ -11,7 +11,7 @@ import antlr.collections.List;
 
 
 @Entity
-@Table(name="vocabularyes")
+@Table(name="Words")
 public class Words {
 	
 	@Id 
@@ -22,9 +22,50 @@ public class Words {
 	private String word; 
 
 	@Column(name="value")
-	private String vocabDescription; 
+	private String description; 
 	
-//	@Column(name="vocabylaryes")
-//	private List<Integer> vocabylaryes;
+	@Column(name="vocabulary_id")
+	private int vocabularyId;
 
+	
+	public Words() { }
+	
+	public Words(String word, String value, int vocabId){
+		this.setWord(word);
+		this.setDescription(value);
+		this.setParentVocabId(vocabId);
+	}
+
+	public String getWord() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getParentVocabId() {
+		return vocabularyId;
+	}
+
+	public void setParentVocabId(int vocabularyId) {
+		this.vocabularyId = vocabularyId;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }

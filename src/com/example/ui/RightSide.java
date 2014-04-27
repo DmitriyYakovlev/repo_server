@@ -1,14 +1,22 @@
 package com.example.ui;
 
+import java.util.List;
+
+import org.hibernate.Session;
+
+import com.example.data.DbHelper;
+import com.example.data.VocabularyT;
+import com.example.data.Words;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 public class RightSide extends VerticalLayout{
 
@@ -16,20 +24,27 @@ public class RightSide extends VerticalLayout{
 	private static final String WORD = "Word";
 	private static final String DESCRIPTION = "Description";
 	private static final String BTN_DEL_WORD = "Delete";
-	IndexedContainer wordsContainer = createWodsDataSourse();
+	IndexedContainer wordsContainer;
+	private Session session = null;
+	private int vocabularyId;
 
 	// second
 	private Table wordsList = new Table();
 	
-	public RightSide() {
+	public RightSide(Session session, int vocabularyId) {
+		this.session = session;
+		this.vocabularyId = vocabularyId;
 		
 		draw();
 		initWordsList();
 	}
 
 	private void draw() {
+		VocabularyT vocab = DbHelper.getVocabularyById(Integer.toString(vocabularyId), session);
+		
 		Label lbVocabilaryName = new Label("Vocabilary");
 		lbVocabilaryName.setContentMode(Label.CONTENT_TEXT);
+		lbVocabilaryName.setValue("Vocabilary : " + vocab.getVocabName());
 		addComponent(lbVocabilaryName);
 
 		wordsList.setSizeFull();
@@ -39,50 +54,51 @@ public class RightSide extends VerticalLayout{
 	}
 	
 	private void initWordsList(){
+		wordsContainer = createWodsDataSourse();
 		wordsList.setContainerDataSource(wordsContainer);
 		wordsList.setVisibleColumns(new String[] { WORD, DESCRIPTION, BTN_DEL_WORD });
 		wordsList.setSelectable(true);
 		wordsList.setImmediate(true);
-
-		wordsList.addValueChangeListener(new Property.ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				Object contactId = wordsList.getValue();
-			}
-		});
 		
 	}
 	
-	private static IndexedContainer createWodsDataSourse() {
+	private IndexedContainer createWodsDataSourse() {
 		IndexedContainer ic = new IndexedContainer();
 
 		ic.addContainerProperty(WORD, String.class, "");
 		ic.addContainerProperty(DESCRIPTION, String.class, "");
 		ic.addContainerProperty(BTN_DEL_WORD, Button.class, null);
 
-		String[] fnames = { "Peter", "Alice", "Joshua", "Mike", "Olivia",
-				"Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene",
-				"Lisa", "Marge" };
+		List<Words> words = DbHelper.getWordsByVocabularyId(vocabularyId, session);
+		
 
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < words.size(); i++) {
+			
+			Words curentWord = words.get(i);
+			
 			Object id = ic.addItem();
-			ic.getContainerProperty(id, WORD).setValue(fnames[(int) (fnames.length * Math.random())]);
-
-			ic.getContainerProperty(id, DESCRIPTION).setValue(fnames[(int) (fnames.length * Math.random())]);
-
-			Integer itemId = new Integer(i);
+			
+			
+			ic.getContainerProperty(id, WORD).setValue(curentWord.getWord());
+			ic.getContainerProperty(id, DESCRIPTION).setValue(curentWord.getDescription());
 
 			Button btnDelete = new Button("Delete");
-			btnDelete.setData(itemId);
+			btnDelete.setData(curentWord.getId());
 			btnDelete.addClickListener(new Button.ClickListener() {
-				
-				@Override
-				public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
+				public void buttonClick(ClickEvent event) {
 					Integer iid = (Integer) event.getButton().getData();
-					Notification.show("Link " + iid.intValue() + " clicked.");					
+					
+					DbHelper.removeItemByTableName(iid, session, "Words");
+					Notification.show("Word deleted.");
+					
+					HorizontalSplitPanel splitPanel = UiHelper.setUi(session, vocabularyId);
+					System.out.println(Integer.toString(iid)  );
+
+					getUI().setContent(splitPanel);
+					getUI().push();
 				}
 			});
+			
 			ic.getContainerProperty(id, BTN_DEL_WORD).setValue(btnDelete);
 		}
 

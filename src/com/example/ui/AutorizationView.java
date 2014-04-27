@@ -1,6 +1,12 @@
 package com.example.ui;
 
+import java.util.List;
+
+import org.hibernate.Session;
+
 import com.example.constants.Constants;
+import com.example.data.DbHelper;
+import com.example.data.VocabularyT;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalSplitPanel;
@@ -16,7 +22,10 @@ public class AutorizationView extends VerticalLayout{
 	private TextField username;
 	private PasswordField password;
 	
+	private Session session = null;
+	
 	public AutorizationView() {
+		session = DbHelper.openSession();
 		setPaswordFields(this);
 	}
 	
@@ -39,13 +48,10 @@ public class AutorizationView extends VerticalLayout{
 				
 				if (login.equals(Constants.LOGIN) && pass.equals(Constants.PASSWORD))
 				{
-					HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
-
-					LeftSide leftLayout = new LeftSide();
-					RightSide rightLayout = new RightSide();
-					
-					splitPanel.addComponent(leftLayout);
-					splitPanel.addComponent(rightLayout);
+					List<VocabularyT> allVocabularyes = DbHelper.getAllVocabularyes(session);
+					Integer firstVocabId = allVocabularyes.get(0).getId();
+										
+					HorizontalSplitPanel splitPanel = UiHelper.setUi(session, firstVocabId);
 					
 					getUI().setContent(splitPanel);
 					getUI().push();

@@ -16,7 +16,7 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		
-		<mapping class="com.example.data.Vocabularyes" />
+		<mapping class="com.example.data.VocabularyT" />
 		<mapping class="com.example.data.Words" />
 	</session-factory>
 </hibernate-configuration>
