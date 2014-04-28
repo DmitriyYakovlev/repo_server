@@ -7,9 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import antlr.collections.List;
-
-
 @Entity
 @Table(name="Words")
 public class Words {

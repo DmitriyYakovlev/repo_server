@@ -26,40 +26,27 @@ public class AutorizationView extends VerticalLayout{
 	
 	public AutorizationView() {
 		session = DbHelper.openSession();
-		setPaswordFields(this);
+		setAuthorizationFields(this);
 	}
 	
-	public void setPaswordFields(VerticalLayout layout) {
+	public void setAuthorizationFields(VerticalLayout layout) {
 		
 		setSizeFull();
-
 		setMargin(true);
 		setSpacing(true);
 		setStyleName(Reindeer.LAYOUT_BLUE);
 
-		username = new TextField("Username");
-		password = new PasswordField("Password");
+		username = new TextField(Constants.S_USERNAME);
+		password = new PasswordField(Constants.S_PASWORD);
 
-		Button loginButton = new Button("Login", new Button.ClickListener() {
+		Button loginButton = new Button(Constants.S_LOGIN, new Button.ClickListener() {
+			
 			@Override
 			public void buttonClick(ClickEvent event) {
 				String login = username.getValue();
 				String pass = password.getValue();
 				
-				if (login.equals(Constants.LOGIN) && pass.equals(Constants.PASSWORD))
-				{
-					List<VocabularyT> allVocabularyes = DbHelper.getAllVocabularyes(session);
-					Integer firstVocabId = allVocabularyes.get(0).getId();
-										
-					HorizontalSplitPanel splitPanel = UiHelper.setUi(session, firstVocabId);
-					
-					getUI().setContent(splitPanel);
-					getUI().push();
-				}
-				else {
-					Notification.show("Incorect login or password");
-					
-				}
+				checkUser(login, pass);
 			}
 		});
 
@@ -75,7 +62,22 @@ public class AutorizationView extends VerticalLayout{
 		addComponent(holder);
 		setComponentAlignment(holder, Alignment.MIDDLE_CENTER);
 		
-		
 	}
 	
+	private void checkUser(String login, String pass) 
+	{
+		if (login.equals(Constants.LOGIN) && pass.equals(Constants.PASSWORD) )
+			initContent();
+		else 
+			Notification.show("Incorect login or password");
+	}
+	
+	private void initContent() {
+		List<VocabularyT> allVocabularyes = DbHelper.getAllVocabularyes(session);
+		Integer firstVocabId = allVocabularyes.get(0).getId();
+							
+		HorizontalSplitPanel splitPanel = UiHelper.getUiHorizontalSplitPanel(session, firstVocabId);
+		getUI().setContent(splitPanel);
+		getUI().push();
+	}
 }

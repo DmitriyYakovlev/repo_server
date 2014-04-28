@@ -9,7 +9,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-import com.vaadin.ui.Table;
 
 public class DbHelper {
 
@@ -68,6 +67,7 @@ public class DbHelper {
 		return vocabularyes;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<VocabularyT> getAllVocabularyes(Session session) {
 		List<VocabularyT> vocabularyes = null;
 		Query query = session.createQuery("FROM VocabularyT ORDER BY id");
@@ -76,6 +76,7 @@ public class DbHelper {
 		return vocabularyes;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<Words> getWordsByVocabularyId (int vocabId, Session session) {
 		List<Words> words = null;
 		Query query = session.createQuery("FROM Words WHERE vocabulary_id = " + Integer.toString(vocabId));
