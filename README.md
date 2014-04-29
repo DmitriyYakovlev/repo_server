@@ -14,7 +14,7 @@ server java ee
 5) How to use connection with server?
 6) How to persist login and password.
 7) Serial version uid warnings.
-8) What about utf?
+
 9) After refresh?
 10) When close session?
 

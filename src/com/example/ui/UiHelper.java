@@ -12,11 +12,11 @@ public class UiHelper {
 		HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
 
 		LeftContent leftLayout = new LeftContent(session);	
-		RightContent rightLayout = new RightContent(session, firstVocabId);
-		
 		splitPanel.addComponent(leftLayout);
-		splitPanel.addComponent(rightLayout);
 		
+		RightContent rightLayout = new RightContent(session, firstVocabId);
+		splitPanel.addComponent(rightLayout);
+
 		return splitPanel;
 	}
 	

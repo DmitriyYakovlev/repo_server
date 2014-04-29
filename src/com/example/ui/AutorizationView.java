@@ -74,7 +74,13 @@ public class AutorizationView extends VerticalLayout{
 	
 	private void initContent() {
 		List<VocabularyT> allVocabularyes = DbHelper.getAllVocabularyes(session);
-		Integer firstVocabId = allVocabularyes.get(0).getId();
+		
+		Integer firstVocabId = null;
+		if (allVocabularyes.size() != 0){
+			firstVocabId = allVocabularyes.get(0).getId();
+		}
+		else
+			firstVocabId = -1;
 							
 		HorizontalSplitPanel splitPanel = UiHelper.getUiHorizontalSplitPanel(session, firstVocabId);
 		getUI().setContent(splitPanel);

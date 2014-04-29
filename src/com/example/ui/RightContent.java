@@ -32,12 +32,17 @@ public class RightContent extends VerticalLayout{
 		this.session = session;
 		this.vocabularyId = vocabularyId;
 		
+		if (vocabularyId == -1)	
+			return;
+		
+		
 		setRightContentViews();
 		initWordsTable();
 	}
 
 	@SuppressWarnings("deprecation")
 	private void setRightContentViews() {
+		
 		VocabularyT vocab = DbHelper.getVocabularyById(Integer.toString(vocabularyId), session);
 		
 		Label lbVocabilaryName = new Label();
@@ -52,7 +57,12 @@ public class RightContent extends VerticalLayout{
 	}
 	
 	private void initWordsTable(){
-		wordsContainer = createWodsDataSourse();
+		
+		if (vocabularyId == -1)
+			wordsContainer = new IndexedContainer();
+		else 
+			wordsContainer = createWodsDataSourse();
+		
 		wordsTable.setContainerDataSource(wordsContainer);
 		wordsTable.setVisibleColumns(new String[] { Constants.WORD, Constants.DESCRIPTION, Constants.BTN_DEL_WORD });
 		wordsTable.setSelectable(true);
