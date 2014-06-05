@@ -7,21 +7,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 @Table(name="Words")
 public class Words {
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO) 
+	@SerializedName("word_id")
 	private int id; 
 
 	@Column(name="word")
+	@SerializedName("word")
 	private String word; 
 
 	@Column(name="value")
+	@SerializedName("value")
 	private String description; 
 	
 	@Column(name="vocabulary_id")
+	@SerializedName("voc_id")
 	private int vocabularyId;
 
 	

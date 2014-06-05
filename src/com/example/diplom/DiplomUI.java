@@ -18,7 +18,7 @@ import com.vaadin.ui.UI;
 @Push
 public class DiplomUI extends UI {
 
-	@WebServlet(value = "/*", asyncSupported = true)
+	@WebServlet(urlPatterns = {"/ui/*", "/VAADIN/*"}, asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = DiplomUI.class)
 	public static class Servlet extends VaadinServlet { }
 
@@ -28,6 +28,8 @@ public class DiplomUI extends UI {
 	{
 		AutorizationView autorization = new AutorizationView();
 		setContent(autorization);
+		
+		
 	}
 
 }

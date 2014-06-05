@@ -30,5 +30,8 @@ public class Constants {
 	public static final String BTN_DEL_WORD = "Delete";
 	public static final String S_VOCAB = "Vocabilary";
 	public static final String N_WORD_DEL = "Word deleted.";
+
+	public static final String REQUEST_GET_VOCAB_LIST = "get_vocab_list";
+	public static final String REQUEST_GET_VOCAB_BY_ID = "get_vocab_by_id";
 	
 }

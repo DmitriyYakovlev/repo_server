@@ -1,5 +1,7 @@
 package com.example.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,31 +9,49 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+
 @Entity
-@Table(name="vocabularyes")
-public class VocabularyT {
-	
-	@Id 
-	@GeneratedValue(strategy = GenerationType.AUTO) 
-	private int id; 
+@Table(name = "vocabularyes")
+public class VocabularyT implements Serializable {
 
-	@Column(name="name")
-	private String vocabName; 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SerializedName("voc_id")
+	private int id;
 
-	@Column(name="description")
-	private String vocabDescription; 
-	
-	@Column(name="authorId")
+	@Column(name = "name")
+	@SerializedName("voc_name")
+	private String vocabName;
+
+	@Column(name = "description")
+	@SerializedName("voc_desc")
+	private String vocabDescription;
+
+	@Column(name = "authorId")
+	@SerializedName("voc_autor_id")
 	private int authorId;
-  
-	public VocabularyT() { }
-	
+
+	public VocabularyT() {
+	}
+
 	public VocabularyT(String name, String desc, int authorId) {
 		this.vocabName = name;
 		this.vocabDescription = desc;
 		this.authorId = authorId;
 	}
-	
+
+	public String toJson() {
+		return new Gson().toJson(this);
+	}
+
+	public static VocabularyT fromJson(String jsonString) {
+		VocabularyT devInfo = new Gson()
+				.fromJson(jsonString, VocabularyT.class);
+		return devInfo;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -65,4 +85,3 @@ public class VocabularyT {
 	}
 
 }
-   
