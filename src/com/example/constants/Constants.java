@@ -2,15 +2,14 @@ package com.example.constants;
 
 public class Constants {
 	
-	public static String PASSWORD = "1";
-	public static String LOGIN = "1";
-	
+	public static String CONFIG_FILE_NAME = "conf.properties";
 	
 	// views
 	public static String S_USERNAME = "Username";
 	public static String S_PASWORD = "Password";
 	public static String S_LOGIN = "Login";
 	public static String S_ADD_VOCAB = "Add vocabulary";
+	public static String S_LOG_OUT = "LOG OUT";
 
 	
 	// left view

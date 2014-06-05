@@ -26,6 +26,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Table.TableDragMode;
 import com.vaadin.ui.Upload.FinishedEvent;
 import com.vaadin.ui.Upload.Receiver;
 
@@ -53,7 +54,7 @@ public class LeftContent extends VerticalLayout {
 	private void setLeftContentViews() {
 		Label lbUser = new Label();
 		lbUser.setContentMode(Label.CONTENT_TEXT);
-		lbUser.setValue(Constants.S_USER + " : " + Constants.LOGIN);
+		lbUser.setValue(Constants.S_USER + " : " + "DDDDDDDDDDDDDDDDDDDDD");
 		addComponent(lbUser);
 
 		addComponent(vocabularyTable);
@@ -79,7 +80,7 @@ public class LeftContent extends VerticalLayout {
 	}
 
 	private void onAddVocabPress(String vocabName) {
-		// TODO : oбробка ввода і захист від дурня.
+		// TODO : oпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
 		if (vocabName.equals("") || vocabName == null) {
 
 		} else {
@@ -122,6 +123,10 @@ public class LeftContent extends VerticalLayout {
 
 			VocabularyT curentVoc = allVocabularyes.get(i);
 
+			vocabularyTable.setColumnAlignment(Constants.VNAME, Table.ALIGN_LEFT);
+			vocabularyTable.setColumnAlignment(Constants.BLOAD, Table.ALIGN_CENTER);
+			vocabularyTable.setColumnAlignment(Constants.BDELETE, Table.ALIGN_CENTER);
+			
 			Object id = idnxContain.addItem();
 			idnxContain.getContainerProperty(id, Constants.VNAME).setValue(
 					curentVoc.getVocabName());
