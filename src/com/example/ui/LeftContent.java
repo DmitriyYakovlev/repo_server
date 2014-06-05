@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Properties;
 
 import org.hibernate.Session;
 
@@ -46,15 +47,24 @@ public class LeftContent extends VerticalLayout {
 
 	public LeftContent(Session session) {
 		this.session = session;
-		setLeftContentViews();
+		try {
+			setLeftContentViews();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		initVocabilaryTable();
 	}
 
 	@SuppressWarnings("deprecation")
-	private void setLeftContentViews() {
+	private void setLeftContentViews() throws IOException {
 		Label lbUser = new Label();
 		lbUser.setContentMode(Label.CONTENT_TEXT);
-		lbUser.setValue(Constants.S_USER + " : " + "DDDDDDDDDDDDDDDDDDDDD");
+		
+		Properties properties = VocabularyFileParser.getPropertiesFromClasspath(Constants.CONFIG_FILE_NAME, this.getClass());
+		String loginFromFile = VocabularyFileParser.getLoginFromProp(properties);
+		
+		lbUser.setValue(Constants.S_USER + " : " + loginFromFile);
+		
 		addComponent(lbUser);
 
 		addComponent(vocabularyTable);
@@ -65,6 +75,7 @@ public class LeftContent extends VerticalLayout {
 		addComponent(bottomLeftLayout);
 		bottomLeftLayout.addComponent(tfNewVocabulary);
 		bottomLeftLayout.addComponent(btnAddVocab);
+		bottomLeftLayout.setSpacing(true);
 
 		btnAddVocab.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;

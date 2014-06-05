@@ -62,10 +62,12 @@ public class RightContent extends VerticalLayout{
 		HorizontalLayout topRightLayout = new HorizontalLayout();
 		addComponent(topRightLayout);
 		topRightLayout.setWidth("100%");
+		topRightLayout.setSpacing(true);
 		topRightLayout.addComponent(lbVocabilaryName);
 		topRightLayout.addComponent(btnLogOut);
 		topRightLayout.setComponentAlignment(btnLogOut, Alignment.MIDDLE_RIGHT);
 
+		setSpacing(true);
 
 		btnLogOut.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
